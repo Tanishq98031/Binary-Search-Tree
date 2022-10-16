@@ -1,0 +1,55 @@
+public static NodeBst deleteinBst(NodeBst root, int x)
+    {
+        if(root == null) return null;
+
+        if(root.data == x)
+        {
+            //0 child:
+            if(root.left == null && root.right == null)
+            {
+                return null;
+            }
+
+            //1 child:
+            //a. left child
+            if(root.left != null && root.right == null)
+            {
+                NodeBst temp = root.left;
+                return temp;
+            }
+            //b. right child
+            if(root.right != null && root.left == null)
+            {
+                NodeBst temp = root.right;
+                return temp;
+            }
+
+            //2 child:
+            else
+            {
+                int maxi = getMax(root.right).data;
+                root.data = maxi;
+                root.right = deleteinBst(root.right, maxi);
+                return root;
+            }
+        }
+        else if(x < root.data)
+        {
+            root.left = deleteinBst(root.left, x);
+        }
+        else
+        {
+            root.right = deleteinBst(root.right, x);
+        }
+        return root;
+    }
+    
+    public static NodeBst getMax(NodeBst root)
+    {
+        NodeBst temp = root;
+        while(temp.right != null)
+        {
+            temp = temp.right;
+        }
+        return temp;
+    }
